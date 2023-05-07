@@ -6,7 +6,7 @@ import bg from '../../../assets/images/bg.png'
 const AppointmentBanner = ({ selectedDate, setSelectedDate }) => {
 
     return (
-        <div className="hero" style={{ backgroundImage: `url(${bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <div className="hero  h-[680px]" style={{ backgroundImage: `url(${bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
             <div className="hero-content flex-col lg:flex-row-reverse ">
                 <div>
                     <img src={chair} className="max-w-sm rounded-lg shadow-2xl" />
