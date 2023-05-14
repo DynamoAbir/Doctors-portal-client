@@ -7,14 +7,18 @@ const NavBar = () => {
     const { user, logout } = useContext(AuthContext);
     const hanldeLogOut = () => {
         logout()
+            .then(() => { })
+            .catch(error => console.error(error))
     }
     const manuItems = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/about'>About</Link></li>
         <li><Link to='/appointment'>Appointment</Link></li>
-        <li><Link to='/reviews'>Reviews</Link></li>
         <li><Link to='/contactus'>Contact Us</Link></li>
-        {user?.uid ? <li><button onClick={hanldeLogOut}>Log Out</button></li> : <li><Link to='/login'>Login</Link></li>}
+        {user?.uid ? <>
+            <li><Link to='/Dashboard'>Dashboard</Link></li>
+            <li><button onClick={hanldeLogOut}>Log Out</button></li>
+        </> : <li><Link to='/login'>Login</Link></li>}
     </>
     return (
         <div className="navbar bg-base-100 flex justify-between">

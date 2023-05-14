@@ -1,20 +1,32 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
+import { toast } from 'react-hot-toast';
 
 
 const SignUp = () => {
-
-    const { createUser } = useContext(AuthContext)
+    const [signUpError, setSignUpError] = useState('')
+    const { createUser, updateUser } = useContext(AuthContext)
     const { register, handleSubmit, formState: { errors } } = useForm();
     const handleSignup = (data) => {
+        setSignUpError('')
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                toast('User Created Successfully')
+                const displayName = data.name;
+                updateUser(displayName)
+                    .then(() => { })
+                    .catch(error => {
+                        console.error(error)
+                    })
             })
-            .catch(error => console.error(error))
+            .catch(error => {
+                console.error(error)
+                setSignUpError(error.message)
+            })
         console.log(data);
 
     }
@@ -50,6 +62,7 @@ const SignUp = () => {
                             minLength: { value: 6, message: "Password must be 6 charecters or longer", },
                             pattern: { value: /(?=.*[A-Z])(?=.*[0-9])/, message: 'password should contain one Capital letter and one Number' }
                         })} type='password' className='input input-bordered w-full max-w-xs' />
+                        {signUpError && <p className='text-red-600'>{signUpError}</p>}
 
                         {errors.password && <p className='text-red-600'>{errors.password.message}</p>}
                     </div>
